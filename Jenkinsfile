@@ -11,7 +11,7 @@ pipeline {
       steps {
         // unstash 'model_file'
         sh 'echo ${model_path}'
-        // sh 'mv model_file $model_path' 
+        sh 'mv model_file $model_path' 
       }
     }
   }
