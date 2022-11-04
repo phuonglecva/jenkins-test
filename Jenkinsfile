@@ -11,7 +11,7 @@ pipeline {
       steps {
         unstash 'large'
         // sh 'cat large'
-        sh 'mv large ${model_path}'
+        sh 'mv -f large ${model_path}'
       }
     }
   }
