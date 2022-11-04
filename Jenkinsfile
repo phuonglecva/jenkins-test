@@ -9,7 +9,7 @@ pipeline {
             }
             steps {
                 sh 'python --version' 
-                stash(name: 'compiled-results', includes: 'sources/*.py*') 
+                echo 'python --version'
             }
         }
     }
