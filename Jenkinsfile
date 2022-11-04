@@ -1,16 +1,15 @@
-pipeline{
-    agent {
-        dockerfile true
-    }
-    stages{
-        stage("Build") {
-            steps {
-                checkout scm 
-                image = docker.build("jk_fastapi:latest")
-                image.inside {
-                    sh 'curl http://localhost:8000'
-                }
-            }
-        }
+pipeline {
+    agent any
+    checkout scm
+    /*
+     * In order to communicate with the MySQL server, this Pipeline explicitly
+     * maps the port (`3306`) to a known port on the host machine.
+     */
+    docker.image('mysql:5').withRun('-e "MYSQL_ROOT_PASSWORD=my-secret-pw"' +
+                                    ' -p 3306:3306') { c ->
+        /* Wait until mysql service is up */
+        sh 'while ! mysqladmin ping -h0.0.0.0 --silent; do sleep 1; done'
+        /* Run some tests which require MySQL */
+        sh 'make check'
     }
 }
