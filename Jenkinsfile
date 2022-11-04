@@ -11,7 +11,10 @@ pipeline {
       steps {
         unstash 'large'
         // sh 'cat large'
-        sh 'mv -f large ${model_path}'
+        sh '''
+        mkdir -p data/models/ && \
+        mv -f large data/models/model.zip
+        '''
       }
     }
   }
