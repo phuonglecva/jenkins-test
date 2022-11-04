@@ -1,11 +1,11 @@
 pipeline {
   agent any
-//   parameters {
-//     stashedFile 'model_file'
-//   }
-//   environment {
-//     model_path = "data/models/model.zip"
-//   }
+  parameters {
+    stashedFile 'model_file'
+  }
+  environment {
+    model_path = "data/models/model.zip"
+  }
   stages {
     stage('BUILD') {
       steps {
