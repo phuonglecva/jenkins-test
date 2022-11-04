@@ -1,3 +1,11 @@
+properties(
+    [
+        parameters(
+            [ file(name: "file1", file: "file1.zip", description: 'Choose path to upload file1.zip from local system.') ]
+            )
+    ]
+)
+
 pipeline{
     agent any    
     environment {
