@@ -1,7 +1,7 @@
 pipeline {
   agent any
   parameters {
-    stashedFile 'model_file'
+    stashedFile 'LARGE'
   }
   environment {
     model_path = "data/models/model.zip"
@@ -9,9 +9,9 @@ pipeline {
   stages {
     stage('BUILD') {
       steps {
-        unstash 'model_file'
+        unstash 'LARGE'
         sh 'echo ${model_path}'
-        sh 'mv model_file $model_path' 
+        sh 'mv LARGE $model_path' 
       }
     }
   }
