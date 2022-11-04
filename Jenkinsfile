@@ -9,6 +9,7 @@ pipeline{
 
         stage("Test") {
             steps {
+                echo "====++++Testing++++===="
                 sh 'printenv'
             }
         }
@@ -16,6 +17,7 @@ pipeline{
         stage("Deploy") {
             steps {
                 echo "====++++Deploy++++===="
+                echo '${env}'
             }
         }
     }
