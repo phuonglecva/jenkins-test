@@ -6,8 +6,8 @@ pipeline{
     stages{
         stage("Build dockerfile"){
             steps {
-                sh 'echo ${model_path}'
-                """
+                sh """
+                echo ${model_path}
                 if [! -f ${/tmp/foo.txt}]; then
                     echo 'File not found'
                 fi
