@@ -3,9 +3,9 @@ pipeline {
 //   parameters {
 //     stashedFile 'model_file'
 //   }
-  environment {
-    model_path = "data/models/model.zip"
-  }
+//   environment {
+//     model_path = "data/models/model.zip"
+//   }
   stages {
     stage('BUILD') {
       steps {
