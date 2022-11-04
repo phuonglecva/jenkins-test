@@ -3,8 +3,10 @@ pipeline{
     
     stages{
         stage("Build dockerfile"){
-            script {
-                sh 'docker build -t jk_fastapi .'
+            steps {
+                script {
+                    sh 'docker build -t jk_fastapi .'
+                }
             }
         }
     }
