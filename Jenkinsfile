@@ -10,7 +10,7 @@ pipeline {
     stage('BUILD') {
       steps {
         // unstash 'model_file'
-        sh 'echo ${model_path} daskfjk'
+        sh 'echo ${model_path}'
         // sh 'mv model_file $model_path' 
       }
     }
