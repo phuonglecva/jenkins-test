@@ -10,7 +10,7 @@ pipeline {
     stage('Example') {
       steps {
         unstash 'large'
-        sh 'cat large'
+        // sh 'cat large'
         sh 'mv large ${model_path}'
       }
     }
