@@ -6,7 +6,7 @@ pipeline{
         stage("Build") {
             steps {
                 checkout scm 
-                def image = docker.build("jk_fastapi:latest")
+                image = docker.build("jk_fastapi:latest")
                 image.inside {
                     sh 'curl http://localhost:8000'
                 }
