@@ -10,10 +10,10 @@ pipeline{
         stage("Build"){
             steps{
                 echo "========Buidding========"
-                echo '${env1}'
-                echo '${env2}'
-                echo '${env3}'
-                echo '${env4}'
+                echo ${env1}
+                echo ${env2}
+                echo ${env3}
+                echo ${env4}
             }
         }
 
