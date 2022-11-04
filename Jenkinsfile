@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage("Build dockerfile"){
             steps {
-                echo $model_path
+                sh 'echo ${model_path}'
             }
         }
     }
