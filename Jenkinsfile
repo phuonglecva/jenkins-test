@@ -1,17 +1,14 @@
 pipeline {
   agent any
   parameters {
-    base64File 'small'
-    stashedFile 'large'
+    stashedFile 'data/models/model.zip'
   }
   stages {
-    stage('Example') {
+    stage('BUILD') {
       steps {
-        withFileParameter('small') {
-          sh 'cat $small'
-        }
-        unstash 'large'
-        sh 'cat large'
+        unstash 'data/models/model.zip'
+        // sh 'mv ZIPPED_MODEL_FILE $ZIPPED_MODEL_FILE_FILENAME' 
+        
       }
     }
   }
