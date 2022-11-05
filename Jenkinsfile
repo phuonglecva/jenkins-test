@@ -6,9 +6,11 @@ pipeline {
   }
   environment {
     model_path = "data/models/vosk"
+    local_path = "data/models/vosk/model_latest.tar.xz"
     deployment_name = 'va-slot-filling-online'
     eks_namespace = 'vinbase'
     bucket_name = 'bdi-dev-kbqa'
+    s3_model_path = 'test/models/model_latest.tar.xz' 
   }
   stages {
     stage('kubectl test') {
@@ -32,9 +34,9 @@ pipeline {
         withAWS(region: 'ap-southeast-1', credentials:'aws-test-credentials') {
           // def identity = awsIdentity()
           s3Upload(
-            file:'data/models/vosk/model_latest.tar.xz', 
+            file:'${local_path}', 
             bucket:'${bucket_name}', 
-            path:'test/models/model_latest.tar.xz'
+            path:'${s3_model_path}'
           )
         }
       }
