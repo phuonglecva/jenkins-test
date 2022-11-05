@@ -16,6 +16,7 @@ pipeline {
     stage('kubectl test') {
       steps  {
         echo 'testing'
+        sh 'printenv'
         // sh 'kubectl get pods -n ${eks_namespace}'
       }
     }
@@ -39,9 +40,9 @@ pipeline {
           // def identity = awsIdentity()
           script {
             s3Upload(
-              file:$local_path, 
-              bucket:$bucket_name, 
-              path:$s3_model_path
+              file:env.local_path, 
+              bucket:env.bucket_name, 
+              path:env.s3_model_path
             )
           }
         }
