@@ -48,8 +48,8 @@ pipeline {
         echo 'restart pod'
         script {
           def POD_NAME = sh(script: 'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers', returnStdout: true)
+          sh 'echo $POD_NAME'
         }
-        sh 'echo $POD_NAME'
         // sh 'kubectl delete pod ${pod_name} --now --namespace ${eks_namespace}'
       }
     }
