@@ -31,13 +31,16 @@ pipeline {
     }
     stage('Upload to s3') {
       steps {
+
         withAWS(region: 'ap-southeast-1', credentials:'aws-test-credentials') {
           // def identity = awsIdentity()
-          s3Upload(
-            file:'${local_path}', 
-            bucket:'${bucket_name}', 
-            path:'${s3_model_path}'
-          )
+          script {
+            s3Upload(
+              file:'${local_path}', 
+              bucket:'${bucket_name}', 
+              path:'${s3_model_path}'
+            )
+          }
         }
       }
     }
