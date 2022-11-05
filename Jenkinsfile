@@ -16,7 +16,7 @@ pipeline {
   stages {
     stage('kubectl test') {
       steps  {
-        step('test') {
+        script {
           if (params.service_name == 'va-slot-filling-online') {
             echo 'hello from va'
           } else {
