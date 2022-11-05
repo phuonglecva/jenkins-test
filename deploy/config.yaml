@@ -1,4 +1,6 @@
-local_model_path: data/models/vosk/model_latest.tar.xz
-deployment_name: deployment_name
-bucket_name: bucket_name
-s3_model_path: s3_model_path
+---
+va-slot-filling-models:
+  local_model_path: data/models/vosk/model_latest.tar.xz
+  deployment_name: va-slot-filling-online
+  bucket_name: bdi-dev-kbqa
+  s3_model_path: test/models/model_latest.tar.xz
