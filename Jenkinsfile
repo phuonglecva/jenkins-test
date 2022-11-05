@@ -14,13 +14,15 @@ pipeline {
   stages {
     stage('kubectl test') {
       steps  {
-        sh 'export KUBECONFIG=~/.kube/config'
-        sh 'kubectl get pods -n ${eks_namespace}'
-        def pod_name = sh(
-          script:'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers',
-          returnStdout:true  
-        )
-        sh 'echo ${pod_name}'
+        step {
+          sh 'export KUBECONFIG=~/.kube/config'
+          sh 'kubectl get pods -n ${eks_namespace}'
+          def pod_name = sh(
+            script:'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers',
+            returnStdout:true  
+          )
+          sh 'echo ${pod_name}'
+        }
       }
     }
     stage('Upload (local -> jenkins)') {
