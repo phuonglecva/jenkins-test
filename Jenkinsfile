@@ -19,12 +19,15 @@ pipeline {
         script {
           if (params.service_name == 'va-slot-filling-online') {
             echo 'hello from va'
+            def config = readYaml(file:"deploy/config.yaml")
+            def bucket_name = config['va-slot-filling-models']['bucket_name'] 
+            echo bucket_name
           } else {
             echo 'hello fallback'
+            def config = readYaml(file:"deploy/config.yaml")
+            def bucket_name = config['asr-websocket-english']['bucket_name'] 
+            echo bucket_name
           }
-          def config = readYaml(file:"deploy/config.yaml")
-          def bucket_name = config['va-slot-filling-models']['bucket_name'] 
-          echo bucket_name
         }
         // sh 'kubectl get pods -n ${eks_namespace}'
       }
