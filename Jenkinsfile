@@ -27,7 +27,7 @@ pipeline {
         withAWS(region: 'ap-southeast-1', credentials:'aws-test-credentials') {
           // def identity = awsIdentity()
           s3Upload(
-            file:'${model_path}/model_latest.tar.xz', 
+            file:'data/models/vosk/model_latest.tar.xz', 
             bucket:'bdi-dev-kbqa', 
             path:'test/models/model_latest.tar.xz'
           )      
