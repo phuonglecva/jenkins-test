@@ -21,7 +21,6 @@ pipeline {
         } else {
           echo 'hello fallback'
         }
-        return
         // sh 'kubectl get pods -n ${eks_namespace}'
       }
     }
