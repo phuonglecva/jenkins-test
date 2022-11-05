@@ -1,31 +1,24 @@
 pipeline {
   agent any
   parameters {
-    stashedFile 'model_latest.tar.xz'
+    stashedFile 'model_latest.tar.xz',
+    choice(name: 'env', choices: ['dev', 'prod'], defaultValue:'dev')
   }
   environment {
     model_path = "data/models/vosk"
     deployment_name = 'va-slot-filling-online'
     eks_namespace = 'vinbase'
-    AWS_ACCESS_KEY_ID     = credentials('aws_access_key_id')
-    AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')  
+    bucket_name = 'bdi-dev-kbqa'
   }
   stages {
     stage('kubectl test') {
       steps  {
         echo 'testing'
         // sh 'kubectl get pods -n ${eks_namespace}'
-        script {
-          sh 'export KUBECONFIG=~/.kube/config'
-          def POD_NAME = sh(script: 'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers', returnStdout: true)
-          sh "echo ${POD_NAME}"
-        }
       }
     }
     stage('Upload (local -> jenkins)') {
       steps {
-        sh 'echo $AWS_ACCESS_KEY_ID'
-        sh 'echo $AWS_SECRET_ACCESS_KEY'
         unstash 'model_latest.tar.xz'
         // sh 'cat large'
         sh '''
@@ -40,9 +33,9 @@ pipeline {
           // def identity = awsIdentity()
           s3Upload(
             file:'data/models/vosk/model_latest.tar.xz', 
-            bucket:'bdi-dev-kbqa', 
+            bucket:'${bucket_name}', 
             path:'test/models/model_latest.tar.xz'
-          )      
+          )
         }
       }
     }
@@ -50,7 +43,12 @@ pipeline {
     stage('restart pod') {
       steps {
         echo 'restart pod'
-        // sh 'kubectl delete pod ${pod_name} --now --namespace ${eks_namespace}'
+        script {
+          sh 'export KUBECONFIG=~/.kube/config'
+          def POD_NAME = sh(script: 'kubectl get pods -n ${eks_namespace} --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers', returnStdout: true)
+          sh "echo ${POD_NAME}"
+          sh 'kubectl delete pod ${POD_NAME} --now --namespace ${eks_namespace}'
+        }
       }
     }
  
