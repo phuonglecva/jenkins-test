@@ -10,7 +10,6 @@ pipeline {
     AWS_ACCESS_KEY_ID     = credentials('aws_access_key_id')
     AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')  
   }
-  POD_NAME = ""
   stages {
     stage('kubectl test') {
       steps  {
@@ -48,8 +47,8 @@ pipeline {
         echo 'restart pod'
         script {
           sh 'export KUBECONFIG=~/.kube/config'
-          POD_NAME = sh(script: 'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers', returnStdout: true)
-          sh 'echo ${POD_NAME}'
+          env.POD_NAME = sh(script: 'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers', returnStdout: true)
+          sh 'echo ${env.POD_NAME}'
         }
         // sh 'kubectl delete pod ${pod_name} --now --namespace ${eks_namespace}'
       }
