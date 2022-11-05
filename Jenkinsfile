@@ -10,7 +10,7 @@ pipeline {
   }
 
   stages {
-    stage {
+    stage('kubectl test') {
       steps  {
         sh 'export KUBECONFIG=~/.kube/config'
         sh 'kubectl get nodes'
