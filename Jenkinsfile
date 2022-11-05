@@ -2,7 +2,7 @@ pipeline {
   agent any
   parameters {
     stashedFile 'model_latest.tar.xz',
-    choice(name: 'env', choices: ['dev', 'prod'], defaultValue:'dev')
+    choice(name: 'env', choices: ['dev', 'prod'])
   }
   environment {
     model_path = "data/models/vosk"
