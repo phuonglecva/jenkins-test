@@ -2,7 +2,7 @@ pipeline {
   agent any
   parameters {
     stashedFile 'model_latest.tar.xz'
-    choice(name: 'env', choices: ['dev', 'prod']),
+    choice(name: 'env', choices: ['dev', 'prod'])
     choice(name: 'service_name', choices: ['va-slot-filling-online', 'asr-websocket-english'])
   }
   environment {
