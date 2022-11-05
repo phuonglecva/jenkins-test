@@ -4,3 +4,10 @@ va-slot-filling-models:
   deployment_name: va-slot-filling-online
   bucket_name: bdi-dev-kbqa
   s3_model_path: test/models/model_latest.tar.xz
+
+---
+asr-websocket-english:
+  local_model_path: data/models/vosk/model_latest.tar.xz
+  deployment_name: asr-websocket-english
+  bucket_name: bdi-dev-speech-models
+  s3_model_path: test/models/model_latest.tar.xz
