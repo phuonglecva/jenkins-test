@@ -31,7 +31,10 @@ pipeline {
     }
     stage('Upload to s3') {
       steps {
-
+        echo '${local_path}'
+        echo '${bucket_name}'
+        echo '${s3_model_path}'
+        
         withAWS(region: 'ap-southeast-1', credentials:'aws-test-credentials') {
           // def identity = awsIdentity()
           script {
