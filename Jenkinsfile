@@ -5,7 +5,7 @@ pipeline {
   }
   environment {
     model_path = "data/models/vosk"
-    deployment_name = 'va-slot-filling-online*'
+    deployment_name = 'va-slot-filling-online'
     eks_namespace = 'vinbase'
     AWS_ACCESS_KEY_ID     = credentials('aws_access_key_id')
     AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')  
