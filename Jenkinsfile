@@ -14,11 +14,11 @@ pipeline {
       steps {
         sh 'echo $AWS_ACCESS_KEY_ID'
         sh 'echo $AWS_SECRET_ACCESS_KEY'
-        unstash 'large'
+        unstash 'model_latest.tar.xz'
         // sh 'cat large'
         sh '''
         mkdir -p ${model_path} && \
-        mv -f large ${model_path}/model_latest.tar.xz
+        mv -f model_latest.tar.xz ${model_path}/model_latest.tar.xz
         '''
       }
     }
