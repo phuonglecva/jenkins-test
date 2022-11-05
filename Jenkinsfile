@@ -22,6 +22,8 @@ pipeline {
           } else {
             echo 'hello fallback'
           }
+          def config = readYaml(file="deploy/config.yaml")
+          echo "$config.bucket_name"
         }
         // sh 'kubectl get pods -n ${eks_namespace}'
       }
