@@ -16,16 +16,12 @@ pipeline {
       steps  {
         sh 'export KUBECONFIG=~/.kube/config'
         // sh 'kubectl get pods -n ${eks_namespace}'
-        script {
-          def POD_NAME = sh(script: 'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers', returnStdout: true)
-        }
       }
     }
     stage('Upload (local -> jenkins)') {
       steps {
         sh 'echo $AWS_ACCESS_KEY_ID'
         sh 'echo $AWS_SECRET_ACCESS_KEY'
-        sh 'echo $POD_NAME'
         unstash 'model_latest.tar.xz'
         // sh 'cat large'
         sh '''
@@ -49,8 +45,11 @@ pipeline {
 
     stage('restart pod') {
       steps {
-        // sh 'pod_name=$(kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers)'
         echo 'restart pod'
+        script {
+          def POD_NAME = sh(script: 'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers', returnStdout: true)
+        }
+        sh 'echo $POD_NAME'
         // sh 'kubectl delete pod ${pod_name} --now --namespace ${eks_namespace}'
       }
     }
