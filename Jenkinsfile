@@ -17,13 +17,7 @@ pipeline {
         sh 'export KUBECONFIG=~/.kube/config'
         // sh 'kubectl get pods -n ${eks_namespace}'
         script {
-          // POD_NAME = sh(
-          //   // script:'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers',
-          //   script:'uname',
-          //   returnStdout:true  
-          // )
-        def ret = sh(script: 'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers', returnStdout: true)
-        echo ret        
+          def POD_NAME = sh(script: 'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers', returnStdout: true)
         }
       }
     }
@@ -31,6 +25,7 @@ pipeline {
       steps {
         sh 'echo $AWS_ACCESS_KEY_ID'
         sh 'echo $AWS_SECRET_ACCESS_KEY'
+        sh 'echo $POD_NAME'
         unstash 'model_latest.tar.xz'
         // sh 'cat large'
         sh '''
