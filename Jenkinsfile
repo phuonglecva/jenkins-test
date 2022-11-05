@@ -19,7 +19,7 @@ pipeline {
         script {
           def POD_NAME = sh(
             // script:'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers',
-            script:'echo hello',
+            script:'uname',
             returnStdout:true  
           )
           sh 'echo ${POD_NAME}'
