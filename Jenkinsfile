@@ -22,7 +22,7 @@ pipeline {
           //   script:'uname',
           //   returnStdout:true  
           // )
-          echo sh(script: 'ls -al', returnStdout: true).result
+          echo sh(script: 'ls -al /var', returnStdout: true).result
         }
       }
     }
