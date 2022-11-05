@@ -22,7 +22,7 @@ pipeline {
           //   script:'uname',
           //   returnStdout:true  
           // )
-        def ret = sh(script: 'uname', returnStdout: true)
+        def ret = sh(script: 'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers', returnStdout: true)
         println ret        
         }
       }
