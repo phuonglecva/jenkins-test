@@ -22,7 +22,8 @@ pipeline {
           //   script:'uname',
           //   returnStdout:true  
           // )
-          echo sh(script: 'ls -al /var', returnStdout: true).result
+        def ret = sh(script: 'uname', returnStdout: true)
+        println ret        
         }
       }
     }
