@@ -18,8 +18,8 @@ pipeline {
         script {
           sh 'export KUBECONFIG=~/.kube/config'
           def POD_NAME = sh(script: 'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers', returnStdout: true)
+          sh "echo ${POD_NAME}"
         }
-        sh "echo ${POD_NAME}"
       }
     }
     stage('Upload (local -> jenkins)') {
