@@ -23,13 +23,15 @@ pipeline {
       }
     }
     stage('Upload to s3') {
-      withAWS(region='ap-southeast-1', credentials='aws-test-credentials') {
-        def identity = awsIdentity()
-        s3Upload(
-          file:'data/models/model.zip', 
-          bucket:'bdi-dev-kbqa', 
-          path:'test/models/model.zip'
-        )      
+      steps {
+        withAWS(region='ap-southeast-1', credentials='aws-test-credentials') {
+          def identity = awsIdentity()
+          s3Upload(
+            file:'data/models/model.zip', 
+            bucket:'bdi-dev-kbqa', 
+            path:'test/models/model.zip'
+          )      
+        }
       }
     }
  
