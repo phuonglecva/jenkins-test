@@ -16,10 +16,12 @@ pipeline {
   stages {
     stage('kubectl test') {
       steps  {
-        if (params.service_name == 'va-slot-filling-online') {
-          echo 'hello from va'
-        } else {
-          echo 'hello fallback'
+        step('test') {
+          if (params.service_name == 'va-slot-filling-online') {
+            echo 'hello from va'
+          } else {
+            echo 'hello fallback'
+          }
         }
         // sh 'kubectl get pods -n ${eks_namespace}'
       }
