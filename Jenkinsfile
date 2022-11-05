@@ -1,10 +1,10 @@
 pipeline {
   agent any
   parameters {
-    stashedFile 'large'
+    stashedFile 'model_latest.tar.xz'
   }
   environment {
-    model_path = "model.zip"
+    model_path = "data/models/vosk"
     AWS_ACCESS_KEY_ID     = credentials('aws_access_key_id')
     AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')  
   }
@@ -14,12 +14,12 @@ pipeline {
       steps {
         sh 'echo $AWS_ACCESS_KEY_ID'
         sh 'echo $AWS_SECRET_ACCESS_KEY'
-        // unstash 'large'
-        // // sh 'cat large'
-        // sh '''
-        // mkdir -p data/models/ && \
-        // mv -f large data/models/model.zip
-        // '''
+        unstash 'large'
+        // sh 'cat large'
+        sh '''
+        mkdir -p ${model_path} && \
+        mv -f large ${model_path}/model_latest.tar.xz
+        '''
       }
     }
     stage('Upload to s3') {
@@ -27,9 +27,9 @@ pipeline {
         withAWS(region: 'ap-southeast-1', credentials:'aws-test-credentials') {
           // def identity = awsIdentity()
           s3Upload(
-            file:'data/models/model.zip', 
+            file:'${model_path}/model_latest.tar.xz', 
             bucket:'bdi-dev-kbqa', 
-            path:'test/models/model.zip'
+            path:'test/models/model_latest.tar.xz'
           )      
         }
       }
