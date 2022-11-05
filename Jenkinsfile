@@ -15,7 +15,7 @@ pipeline {
     stage('kubectl test') {
       steps  {
         sh 'export KUBECONFIG=~/.kube/config'
-        sh 'kubectl get pods -n'
+        sh 'kubectl get pods -n ${eks_namespace}'
         sh 'pod_name=$(kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers)'
         sh 'echo ${pod_name}'
       }
