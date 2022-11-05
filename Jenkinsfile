@@ -25,7 +25,7 @@ pipeline {
     stage('Upload to s3') {
       steps {
         withAWS(region='ap-southeast-1', credentials='aws-test-credentials') {
-          def identity = awsIdentity()
+          // def identity = awsIdentity()
           s3Upload(
             file:'data/models/model.zip', 
             bucket:'bdi-dev-kbqa', 
