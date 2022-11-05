@@ -2,7 +2,8 @@ pipeline {
   agent any
   parameters {
     stashedFile 'model_latest.tar.xz'
-    choice(name: 'env', choices: ['dev', 'prod'])
+    choice(name: 'env', choices: ['dev', 'prod']),
+    choice(name: 'service_name', choices: ['va-slot-filling-online', 'asr-websocket-english'])
   }
   environment {
     model_path = "data/models/vosk"
@@ -15,8 +16,12 @@ pipeline {
   stages {
     stage('kubectl test') {
       steps  {
-        echo 'testing'
-        sh 'printenv'
+        if (params.service_name == 'va-slot-filling-online') {
+          echo 'hello from va'
+        } else {
+          echo 'hello fallback'
+        }
+        return
         // sh 'kubectl get pods -n ${eks_namespace}'
       }
     }
