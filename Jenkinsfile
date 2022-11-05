@@ -14,7 +14,6 @@ pipeline {
   stages {
     stage('kubectl test') {
       steps  {
-        sh 'export KUBECONFIG=~/.kube/config'
         // sh 'kubectl get pods -n ${eks_namespace}'
       }
     }
@@ -47,8 +46,9 @@ pipeline {
       steps {
         echo 'restart pod'
         script {
+          sh 'export KUBECONFIG=~/.kube/config'
           def POD_NAME = sh(script: 'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers', returnStdout: true)
-          sh 'echo $POD_NAME'
+          echo POD_NAME
         }
         // sh 'kubectl delete pod ${pod_name} --now --namespace ${eks_namespace}'
       }
