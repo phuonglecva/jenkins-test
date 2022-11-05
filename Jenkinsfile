@@ -39,9 +39,9 @@ pipeline {
           // def identity = awsIdentity()
           script {
             s3Upload(
-              file:'$local_path', 
-              bucket:'$bucket_name', 
-              path:'$s3_model_path'
+              file:$local_path, 
+              bucket:$bucket_name, 
+              path:$s3_model_path
             )
           }
         }
