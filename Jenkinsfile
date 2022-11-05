@@ -16,10 +16,10 @@ pipeline {
       steps  {
         sh 'export KUBECONFIG=~/.kube/config'
         sh 'kubectl get pods -n ${eks_namespace}'
-        script {
-          pod_name = '$(kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers)'
-          echo pod_name
-        }
+        def pod_name = sh(
+          script:'kubectl get pods -n vinbase --selector=app.kubernetes.io/instance=${deployment_name} -o custom-columns=":metadata.name" --no-headers',
+          returnStdout:true  
+        )
         sh 'echo ${pod_name}'
       }
     }
