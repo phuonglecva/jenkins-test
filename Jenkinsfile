@@ -14,6 +14,7 @@ pipeline {
   stages {
     stage('kubectl test') {
       steps  {
+        echo 'testing'
         // sh 'kubectl get pods -n ${eks_namespace}'
       }
     }
