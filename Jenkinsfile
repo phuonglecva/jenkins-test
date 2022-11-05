@@ -22,6 +22,7 @@ pipeline {
             def config = readYaml(file:"deploy/config.yaml")
             def bucket_name = config['va-slot-filling-models']['bucket_name'] 
             echo bucket_name
+            echo config
           } else {
             echo 'hello fallback'
             def config = readYaml(file:"deploy/config.yaml")
