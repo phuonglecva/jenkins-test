@@ -1,7 +1,7 @@
 pipeline {
   agent any
   parameters {
-    stashedFile 'model_latest.tar.xz',
+    stashedFile 'model_latest.tar.xz'
     choice(name: 'env', choices: ['dev', 'prod'])
   }
   environment {
